@@ -35,8 +35,10 @@ public class Game extends JPanel {
 
       @Override
       public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE && !dead) {
           bird.flap();
+        } else if (dead) {
+          loop();
         }
       }
 
@@ -45,10 +47,6 @@ public class Game extends JPanel {
       }
 
     });
-    // Pipe topPipe= new Pipe("top", 0);
-    // Pipe bottomPipe = new Pipe("bottom", topPipe.locationY);
-    // pipesList.add(topPipe);
-    // pipesList.add(bottomPipe);
     loop();
   }
 
@@ -64,6 +62,12 @@ public class Game extends JPanel {
         }
         dead = bird.isDead();
         repaint();
+        if (dead) {
+          timer.cancel();
+          bird = new Bird();
+          pipesList.clear();
+
+        }
       }
 
     };
@@ -79,10 +83,6 @@ public class Game extends JPanel {
     timer.scheduleAtFixedRate(tick,0, (1000 / 60));
     timer.scheduleAtFixedRate(addPipe, 0, (1700));
   }
-
-
-  //Input
-
 
 //Draw Game
   @Override

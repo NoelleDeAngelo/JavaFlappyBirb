@@ -11,7 +11,6 @@ public class Window extends JFrame {
     setLocationRelativeTo(null);
     setResizable(false);
     add(new Game());
-    //pack();
     setVisible(true);
   }
 
