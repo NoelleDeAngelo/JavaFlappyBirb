@@ -1,5 +1,5 @@
 ## Falppy Birb
-Flappy Birb is a Falppy Bird style game. 
+Flappy Birb is a Flappy Bird style game. 
 
 
 ## Credits
