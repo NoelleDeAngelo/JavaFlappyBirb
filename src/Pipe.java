@@ -22,13 +22,16 @@ public class Pipe {
     locationX -= 2;
   }
 
-// figure out how to return the range of the pipe
-public int getYLoc() {
+  public int getYLoc() {
     if (pos == "top") {
       return 512 + locationY;
     } else if (pos == "bottom") {
       return locationY;
     }
     return 0;
+  }
+
+  public String getPos() {
+    return this.pos;
   }
 }

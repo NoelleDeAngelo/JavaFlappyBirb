@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import java.util.Timer;
@@ -58,21 +60,40 @@ public class Game extends JPanel {
       @Override
       public void run() {
         bird.move();
-        for (Pipe pipe : pipesList) {
+        Iterator<Pipe> iter = pipesList.iterator();
+        while (iter.hasNext()) {
+          Pipe pipe = iter.next();
           pipe.move();
           if (pipe.locationX < 51 && pipe.locationX >= 15) {
-            if (pipe.pos == "top") {
+            if (pipe.getPos() == "top") {
               collision = bird.checkPipeCollision(0, pipe.getYLoc());
-            } else if (pipe.pos == "bottom") {
+            } else if (pipe.getPos() == "bottom") {
               collision = bird.checkPipeCollision(pipe.getYLoc(), 640);
             }
-          if (collision) {
+            if (collision) {
               break;
+            }
           }
-
-            // remove pipes from list that are no longer on screen
+          if (pipe.locationX < -64) {
+            iter.remove();
           }
         }
+        // for (Pipe pipe : pipesList) {
+        //   pipe.move();
+        //   //add collsion for inside pipe
+        //   if (pipe.locationX < 51 && pipe.locationX >= 15) {
+        //     if (pipe.pos == "top") {
+        //       collision = bird.checkPipeCollision(0, pipe.getYLoc());
+        //     } else if (pipe.pos == "bottom") {
+        //       collision = bird.checkPipeCollision(pipe.getYLoc(), 640);
+        //     }
+        //   if (collision) {
+        //       break;
+        //   }
+
+        //     // remove pipes from list that are no longer on screen
+        //   }
+        // }
         dead = collision || bird.checkFloorCollision();
         repaint();
         if (dead) {
