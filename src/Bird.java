@@ -1,6 +1,7 @@
 import javax.swing.ImageIcon;
 import java.awt.*;
 
+
 public class Bird {
   int locationX = 15 ;
   int locationY = 640 / 2;
