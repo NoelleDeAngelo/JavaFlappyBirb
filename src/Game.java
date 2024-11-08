@@ -26,6 +26,7 @@ public class Game extends JPanel {
   // Gameplay
   boolean dead;
   boolean collision = false;
+  int pipeCount = 0;
 
 
   public Game() {
@@ -67,7 +68,7 @@ public class Game extends JPanel {
         while (iter.hasNext()) {
           Pipe pipe = iter.next();
           pipe.move();
-          if (pipe.locationX < 51 && pipe.locationX >= -49) {
+          if (pipe.locationX < 51 && pipe.locationX >= -49) { // check if pipe is in a postion that it could collide with bird
             if (pipe.getPos() == "top") {
               collision = bird.checkPipeCollision(0, pipe.getYLoc());
             } else if (pipe.getPos() == "bottom") {
@@ -78,6 +79,7 @@ public class Game extends JPanel {
             }
           }
           if (pipe.locationX < -64) {
+            pipeCount++;
             iter.remove();
           }
         }
@@ -89,7 +91,7 @@ public class Game extends JPanel {
           bird = new Bird();
           pipesList.clear();
           collision = false;
-
+          pipeCount = 0;
         }
       }
 
@@ -111,6 +113,7 @@ public class Game extends JPanel {
   @Override
   public void paintComponent(Graphics g){
     super.paintComponent(g);
+    g.setFont(new Font("default", Font.BOLD, 18));
     draw(g, dead);
   }
 
@@ -124,6 +127,7 @@ public class Game extends JPanel {
         g.drawImage(pipe.img, pipe.locationX, pipe.locationY, 64, 512, null);
       }
     }
+    g.drawString("Score: "+ pipeCount / 2, 270, 20);
   }
 
 
