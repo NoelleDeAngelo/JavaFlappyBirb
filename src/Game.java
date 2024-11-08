@@ -24,6 +24,7 @@ public class Game extends JPanel {
 
   // Gameplay
   boolean dead;
+  boolean collision = false;
 
   public Game() {
     setFocusable(true);
@@ -59,13 +60,27 @@ public class Game extends JPanel {
         bird.move();
         for (Pipe pipe : pipesList) {
           pipe.move();
+          if (pipe.locationX < 51 && pipe.locationX >= 15) {
+            if (pipe.pos == "top") {
+              collision = bird.checkPipeCollision(0, pipe.getYLoc());
+            } else if (pipe.pos == "bottom") {
+              collision = bird.checkPipeCollision(pipe.getYLoc(), 640);
+            }
+          if (collision) {
+              break;
+          }
+
+            // remove pipes from list that are no longer on screen
+          }
         }
-        dead = bird.isDead();
+        dead = collision || bird.checkFloorCollision();
         repaint();
         if (dead) {
+          // add dely to strating new game
           timer.cancel();
           bird = new Bird();
           pipesList.clear();
+          collision = false;
 
         }
       }
@@ -102,4 +117,6 @@ public class Game extends JPanel {
       }
     }
   }
+
+
 }

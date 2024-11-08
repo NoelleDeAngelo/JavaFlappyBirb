@@ -16,12 +16,20 @@ public class Bird {
     velocity = -4;
   }
 
-  public boolean isDead() {
+
+//Check if bird collides
+  public boolean checkFloorCollision() {
     if (locationY >= 640) {
       return true;
-    }else {
-      return false;
     }
+    return false;
+  }
+
+  public boolean checkPipeCollision(int pipeTop, int pipeBottom) {
+    if (locationY >= pipeTop && locationY <= pipeBottom){
+      return true;
+    }
+      return false;
   }
 
 }
