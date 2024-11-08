@@ -17,7 +17,6 @@ public class Game extends JPanel {
   Image birdImg = new ImageIcon(getClass().getResource("./assets/flappybird.png")).getImage();
   Image topPipeImg = new ImageIcon(getClass().getResource("./assets/toppipe.png")).getImage();
   Image bottomPipeImg = new ImageIcon(getClass().getResource("./assets/bottompipe.png")).getImage();
-  //Image deathImg = new ImageIcon(getClass().getResource("./assets/ko.png")).getImage();
   Image deathbgImg = new ImageIcon(getClass().getResource("./assets/deathbg.png")).getImage();
 
   // Sprites
@@ -27,6 +26,7 @@ public class Game extends JPanel {
   // Gameplay
   boolean dead;
   boolean collision = false;
+
 
   public Game() {
     setFocusable(true);
@@ -54,9 +54,12 @@ public class Game extends JPanel {
   }
 
 
+
+
+//Progress the game
   public void loop() {
     Timer timer = new Timer();
-    TimerTask tick = new TimerTask() {
+    TimerTask tick = new TimerTask() {    //task to run every frame
       @Override
       public void run() {
         bird.move();
@@ -64,7 +67,7 @@ public class Game extends JPanel {
         while (iter.hasNext()) {
           Pipe pipe = iter.next();
           pipe.move();
-          if (pipe.locationX < 51 && pipe.locationX >= 15) {
+          if (pipe.locationX < 51 && pipe.locationX >= -49) {
             if (pipe.getPos() == "top") {
               collision = bird.checkPipeCollision(0, pipe.getYLoc());
             } else if (pipe.getPos() == "bottom") {
@@ -78,22 +81,6 @@ public class Game extends JPanel {
             iter.remove();
           }
         }
-        // for (Pipe pipe : pipesList) {
-        //   pipe.move();
-        //   //add collsion for inside pipe
-        //   if (pipe.locationX < 51 && pipe.locationX >= 15) {
-        //     if (pipe.pos == "top") {
-        //       collision = bird.checkPipeCollision(0, pipe.getYLoc());
-        //     } else if (pipe.pos == "bottom") {
-        //       collision = bird.checkPipeCollision(pipe.getYLoc(), 640);
-        //     }
-        //   if (collision) {
-        //       break;
-        //   }
-
-        //     // remove pipes from list that are no longer on screen
-        //   }
-        // }
         dead = collision || bird.checkFloorCollision();
         repaint();
         if (dead) {
@@ -107,7 +94,7 @@ public class Game extends JPanel {
       }
 
     };
-    TimerTask addPipe = new TimerTask() {
+    TimerTask addPipe = new TimerTask() {  // task to add pipe
       @Override
       public void run() {
         Pipe topPipe= new Pipe("top", 0);
